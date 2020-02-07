@@ -70,7 +70,7 @@ void counterclockwise(float deg)   // function to rotate the kinect sensor anti-
 void loop() 
 {
   int k;
-  for (k=1; k<=10; k++)
+  for (k=1; k<=5; k++)
   {
     delay(3000);
     Serial.print("Round ");
