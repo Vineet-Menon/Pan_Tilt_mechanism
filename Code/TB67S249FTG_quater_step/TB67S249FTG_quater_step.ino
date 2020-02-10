@@ -34,7 +34,7 @@ void clockwise(float deg)   // function to rotate the motor clockwise by a certa
 {
   int i,freq_pulse;
   float theta= 0;
-  freq_pulse = (deg)/0.45;   // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
+  freq_pulse = 4*(deg)/0.45;   // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
   Serial.print("Clockwise ");
   Serial.println(deg,2);
   digitalWrite(ena,HIGH);
@@ -42,10 +42,10 @@ void clockwise(float deg)   // function to rotate the motor clockwise by a certa
   for (i=1; i<=freq_pulse; i++)   //fuction to generate a square wave of period 2t    
   {
      digitalWrite(clk,HIGH);
-     delayMicroseconds(2);     // the largest value that will produce an accurate delay is 16383
+     delayMicroseconds(200);     // the largest value that will produce an accurate delay is 16383
      digitalWrite(clk,LOW);
-     delayMicroseconds(1);
-     theta= theta + (0.45);       // angle increments by 1.8/4 everytime this for loop ends
+     delayMicroseconds(100);
+     theta= theta + (0.45)/4;       // angle increments by 1.8/4 everytime this for loop ends
      Serial.println(theta);
   }
   digitalWrite(ena,LOW);
@@ -55,7 +55,7 @@ void counterclockwise(float deg)   // function to rotate the kinect sensor anti-
 {
   int j, freq_pulse;
   float theta= 0;
-  freq_pulse = (deg)/0.45;     // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
+  freq_pulse = 4*(deg)/0.45;     // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
   Serial.print("Anti-clockwise ");  
   Serial.println(deg,2);
   digitalWrite(ena,HIGH);
@@ -63,10 +63,10 @@ void counterclockwise(float deg)   // function to rotate the kinect sensor anti-
   for (j=1; j<=freq_pulse; j++)     // function to generate a square wave of rate 2t
   {
      digitalWrite(clk,HIGH);
-     delayMicroseconds(2);
+     delayMicroseconds(200);
      digitalWrite(clk,LOW);
-     delayMicroseconds(1);
-     theta= theta+ (0.45);         // angle increments by 0.9/4 everytime this for loop ends
+     delayMicroseconds(100);
+     theta= theta+ (0.45)/4;         // angle increments by 0.9/4 everytime this for loop ends
      Serial.println(theta);
   }
   digitalWrite(ena,LOW);
@@ -80,9 +80,11 @@ void loop()
     Serial.print("Round ");
     Serial.println(k);       // print the round number on the Serial monitor
     delay(2000);
-    clockwise(360);           // call clockwise function to rotate by 45 degrees 
+    clockwise(90);           // call clockwise function to rotate by 45 degrees 
     delay(2000);
-    counterclockwise(360);    // call counterclockwise function to rotate by 45 degrees
+    counterclockwise(180);    // call counterclockwise function to rotate by 45 degrees
+    delay(2000);
+    clockwise(90);
   }
-  delay(10000);              // wait for 30 seconds
+  delay(5000);              // wait for 5 seconds
 }

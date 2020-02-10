@@ -1,0 +1,1 @@
+https://electronics.stackexchange.com/questions/236572/count-pwm-pulses-fed-into-stepper-motor-fet-driver - isolating timing generation for stepper control

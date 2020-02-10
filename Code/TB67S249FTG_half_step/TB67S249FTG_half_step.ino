@@ -78,5 +78,5 @@ void loop()
     delay(2000);
     counterclockwise(360);    // call counterclockwise function to rotate by 45 degrees
   }
-  delay(10000);              // wait for 30 seconds
+  //delay(10000);              // wait for 30 seconds
 }
