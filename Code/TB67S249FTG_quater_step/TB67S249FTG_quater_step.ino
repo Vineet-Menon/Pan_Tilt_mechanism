@@ -8,12 +8,12 @@
  * 
  */
 
-const int dm_0= 11;        // Dmode0 pin is connected to GPIO pin 11
+const int dm_0= 12;        // Dmode0 pin is connected to GPIO pin 11
 const int dm_1= 10;        // Dmode1 pin is connected to GPIO pin 10
-const int dm_2= 9;         // Dmode2 pin is connected to GPIO pin 9
-const int dir= 12;          // Direction (CW/CCW) is given to GPIO pin 12 
-const int clk= 7;          // Step (clk) is given to GPIO pin 7
-const int ena= 13;          // Enable (ena) is given to GPIO pin 13
+const int dm_2= 8;         // Dmode2 pin is connected to GPIO pin 9
+const int dir= 6;          // Direction (CW/CCW) is given to GPIO pin 12 
+const int clk= 4;          // Step (clk) is given to GPIO pin 7
+const int ena= 2;          // Enable (ena) is given to GPIO pin 13
 
 
 void setup() 
@@ -42,9 +42,11 @@ void clockwise(float deg)   // function to rotate the motor clockwise by a certa
   for (i=1; i<=freq_pulse; i++)   //fuction to generate a square wave of period 2t    
   {
      digitalWrite(clk,HIGH);
-     delayMicroseconds(200);     // the largest value that will produce an accurate delay is 16383
+//     delayMicroseconds(1000);     // the largest value that will produce an accurate delay is 16383
+     delay(15);
      digitalWrite(clk,LOW);
-     delayMicroseconds(100);
+//     delayMicroseconds(563);
+     delay(10);
      theta= theta + (0.45)/4;       // angle increments by 1.8/4 everytime this for loop ends
      Serial.println(theta);
   }
@@ -63,9 +65,11 @@ void counterclockwise(float deg)   // function to rotate the kinect sensor anti-
   for (j=1; j<=freq_pulse; j++)     // function to generate a square wave of rate 2t
   {
      digitalWrite(clk,HIGH);
-     delayMicroseconds(200);
+//     delayMicroseconds(1000);
+     delay(15);
      digitalWrite(clk,LOW);
-     delayMicroseconds(100);
+//     delayMicroseconds(562);
+     delay(10);
      theta= theta+ (0.45)/4;         // angle increments by 0.9/4 everytime this for loop ends
      Serial.println(theta);
   }
