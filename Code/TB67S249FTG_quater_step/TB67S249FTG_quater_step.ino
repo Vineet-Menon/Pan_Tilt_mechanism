@@ -42,11 +42,11 @@ void clockwise(float deg)   // function to rotate the motor clockwise by a certa
   for (i=1; i<=freq_pulse; i++)   //fuction to generate a square wave of period 2t    
   {
      digitalWrite(clk,HIGH);
-//     delayMicroseconds(1000);     // the largest value that will produce an accurate delay is 16383
-     delay(15);
+     delayMicroseconds(1000);     // the largest value that will produce an accurate delay is 16383
+//     delay(15);
      digitalWrite(clk,LOW);
-//     delayMicroseconds(563);
-     delay(10);
+     delayMicroseconds(562);
+//     delay(10);
      theta= theta + (0.45)/4;       // angle increments by 1.8/4 everytime this for loop ends
      Serial.println(theta);
   }
@@ -65,11 +65,11 @@ void counterclockwise(float deg)   // function to rotate the kinect sensor anti-
   for (j=1; j<=freq_pulse; j++)     // function to generate a square wave of rate 2t
   {
      digitalWrite(clk,HIGH);
-//     delayMicroseconds(1000);
-     delay(15);
+     delayMicroseconds(1000);
+//     delay(15);
      digitalWrite(clk,LOW);
-//     delayMicroseconds(562);
-     delay(10);
+     delayMicroseconds(563);
+//     delay(10);
      theta= theta+ (0.45)/4;         // angle increments by 0.9/4 everytime this for loop ends
      Serial.println(theta);
   }
