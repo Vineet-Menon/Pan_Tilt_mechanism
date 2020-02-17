@@ -47,6 +47,7 @@ void clockwise(float deg, float F_out)   // function to rotate the motor clockwi
      theta= theta + (0.45)/4;       // angle increments by 1.8/4 everytime this for loop ends
      Serial.println(theta);
   }
+  digitalWrite(clk,LOW);
   digitalWrite(ena,LOW);
 }
 
@@ -54,7 +55,7 @@ void counterclockwise(float deg, float F_out)   // function to rotate the kinect
 {
   int j, freq_pulse;
   float theta= 0;
-  freq_pulse = 4*(2*deg)/0.45;     // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
+  freq_pulse = 4*(deg)/0.45;     // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
   Serial.print("Anti-clockwise ");  
   Serial.println(deg,2);
   digitalWrite(ena,HIGH);
@@ -66,6 +67,7 @@ void counterclockwise(float deg, float F_out)   // function to rotate the kinect
      theta= theta+ (0.45)/4;         // angle increments by 0.9/4 everytime this for loop ends
      Serial.println(theta);
   }
+  digitalWrite(clk,LOW);
   digitalWrite(ena,LOW);
 }
 
@@ -83,8 +85,8 @@ void loop()
 {
   // put your main code here, to run repeatedly:
   int k, M = 4;
-  float rpm = 6;
-  float deg = 45;
+  float rpm = 3;
+  float deg = 90;
   float F_out;
   Microstep(M);
   F_out = (40*M)*rpm/3;
@@ -94,11 +96,13 @@ void loop()
   {
     Serial.print("Round ");
     Serial.println(k);       // print the round number on the Serial monitor
-    delay(2000);
+    delay(1000);
     clockwise(deg,F_out);           // call clockwise function to rotate by 45 degrees 
-    delay(2000);
+    delay(1000);
     counterclockwise(deg,F_out);    // call counterclockwise function to rotate by 45 degrees
-    delay(2000);
+    delay(1000);
+    counterclockwise(deg,F_out);    // call counterclockwise function to rotate by 45 degrees
+    delay(1000);
     clockwise(deg,F_out);
   }
   delay(10000);              // wait for 30 seconds
