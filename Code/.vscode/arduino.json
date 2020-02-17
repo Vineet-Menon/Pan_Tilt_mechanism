@@ -3,5 +3,5 @@
     "programmer": "AVRISP mkII",
     "board": "arduino:avr:mega",
     "configuration": "cpu=atmega2560",
-    "sketch": "BlinkWithoutDelay.ino"
+    "sketch": "Stepper_pwm\\Stepper_pwm.ino"
 }

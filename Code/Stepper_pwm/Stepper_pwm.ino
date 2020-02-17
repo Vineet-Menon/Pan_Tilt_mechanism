@@ -24,26 +24,25 @@ void setup()
   pinMode(dir,OUTPUT);    // Set dir pin as output
   pinMode(clk,OUTPUT);    // Set step pin as output
   pinMode(ena,OUTPUT);    // Set enable pin as output
-  pinMode(dm_0,OUTPUT);    // Set Dmode0 pin as output
-  pinMode(dm_1,OUTPUT);    // Set Dmode1 pin as output
-  pinMode(dm_2,OUTPUT);    // Set Dmode2 pin as output
-  Serial.begin(9600);      // Serial communication baud rate set to 9600
-  InitTimersSafe();        //initialize all timers except for 0, to save time keeping functions
+  pinMode(dm_0,OUTPUT);   // Set Dmode0 pin as output
+  pinMode(dm_1,OUTPUT);   // Set Dmode1 pin as output
+  pinMode(dm_2,OUTPUT);   // Set Dmode2 pin as output
+  Serial.begin(9600);     // Serial communication baud rate set to 9600
+  InitTimersSafe();       //initialize all timers except for 0, to save time keeping functions
 }
 
-void clockwise(float deg, float F_out)   // function to rotate the motor clockwise by a certain degree 'deg'
+void clockwise(float deg)   // function to rotate the motor clockwise by a certain degree 'deg'
 {
-  int i,freq_pulse;
+  int pls_count;
   float theta= 0;
-  freq_pulse = 4*(deg)/0.45;   // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
+  pls_count = 4*(deg)/0.45;   // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
   Serial.print("Clockwise ");
   Serial.println(deg,2);
   digitalWrite(ena,HIGH);
   digitalWrite(dir,HIGH);
-  for (i=1; i<=freq_pulse; i++)   //fuction to generate a square wave of period 2t    
+  for (int i=1; i<=freq_pulse; i++)   //fuction to generate a square wave of frequency F_out    
   {
-     bool success = SetPinFrequencySafe(clk, F_out);      //sets the frequency for the specified pin
-     pwmWrite(clk,127);
+     pwmWrite(clk,128);
      theta= theta + (0.45)/4;       // angle increments by 1.8/4 everytime this for loop ends
      Serial.println(theta);
   }
@@ -51,19 +50,18 @@ void clockwise(float deg, float F_out)   // function to rotate the motor clockwi
   digitalWrite(ena,LOW);
 }
 
-void counterclockwise(float deg, float F_out)   // function to rotate the kinect sensor anti-clockwise by a certain degree 'deg'
+void counterclockwise(float deg)   // function to rotate the kinect sensor anti-clockwise by a certain degree 'deg'
 {
-  int j, freq_pulse;
+  int pls_count;
   float theta= 0;
-  freq_pulse = 4*(deg)/0.45;     // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
+  pls_count = 4*(deg)/0.45;     // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
   Serial.print("Anti-clockwise ");  
   Serial.println(deg,2);
   digitalWrite(ena,HIGH);
   digitalWrite(dir,LOW);
-  for (j=1; j<=freq_pulse; j++)     // function to generate a square wave of rate 2t
+  for (int j=1; j<=freq_pulse; j++)     // function to generate a square wave of frequency F_out
   {
-     bool success = SetPinFrequencySafe(clk, F_out);      //sets the frequency for the specified pin
-     pwmWrite(clk,127);
+     pwmWrite(clk,128);
      theta= theta+ (0.45)/4;         // angle increments by 0.9/4 everytime this for loop ends
      Serial.println(theta);
   }
@@ -71,9 +69,9 @@ void counterclockwise(float deg, float F_out)   // function to rotate the kinect
   digitalWrite(ena,LOW);
 }
 
-void Microstep(int M)
+void microstep(int m)
 {
-  if (M==4)
+  if (m==4)
   {
     digitalWrite(dm_0,LOW);
     digitalWrite(dm_1,HIGH);
@@ -84,26 +82,30 @@ void Microstep(int M)
 void loop() 
 {
   // put your main code here, to run repeatedly:
-  int k, M = 4;
-  float rpm = 3;
-  float deg = 90;
-  float F_out;
-  Microstep(M);
-  F_out = (40*M)*rpm/3;
-  F_out = ceil(F_out);
-  Serial.println(F_out);
-  for (k=1; k<=3; k++)
+  int m = 4;
+  float rpm = 6;
+  float deg = 45;
+  microstep(m);
+  float f_out = (40*m)*rpm/3;
+  f_out = ceil(f_out);
+  Serial.println(f_out);
+  bool success = SetPinFrequencySafe(clk, f_out);      //sets the frequency for the specified pin
+  if(success) 
+  {
+    Serial.println("Ok");    
+  }
+  for (int k=1; k<=3; k++)
   {
     Serial.print("Round ");
     Serial.println(k);       // print the round number on the Serial monitor
     delay(1000);
-    clockwise(deg,F_out);           // call clockwise function to rotate by 45 degrees 
+    clockwise(deg);           // call clockwise function to rotate by 45 degrees 
     delay(1000);
-    counterclockwise(deg,F_out);    // call counterclockwise function to rotate by 45 degrees
+    counterclockwise(deg);    // call counterclockwise function to rotate by 45 degrees
     delay(1000);
-    counterclockwise(deg,F_out);    // call counterclockwise function to rotate by 45 degrees
+    counterclockwise(deg);    // call counterclockwise function to rotate by 45 degrees
     delay(1000);
-    clockwise(deg,F_out);
+    clockwise(deg);
   }
   delay(10000);              // wait for 30 seconds
 }
