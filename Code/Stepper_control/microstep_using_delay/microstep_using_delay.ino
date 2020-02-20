@@ -83,7 +83,7 @@ void loop()
   int m = 2;
   float rpm = 96;
   float deg = 90;
-  
+
   microstep(m);
 
   float f_out = (40*m)*(rpm/3);
@@ -94,7 +94,7 @@ void loop()
   pls_count = ceil(pls_count);
   Serial.print("Pulse count is :");
   Serial.println(pls_count);
-  
+
   float t_out = (pow(10,6))/f_out;          // time in microseconds
   t_out = ceil(t_out/2);                      //divide time period equally for T_on and T_off
 
