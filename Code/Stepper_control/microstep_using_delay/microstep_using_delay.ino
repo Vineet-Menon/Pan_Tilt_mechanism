@@ -80,8 +80,8 @@ void microstep(int m)
 
 void loop() 
 {
-  int m = 2;
-  float rpm = 96;
+  int m = 4;
+  float rpm = 3;
   float deg = 90;
 
   microstep(m);
@@ -97,6 +97,8 @@ void loop()
 
   float t_out = (pow(10,6))/f_out;          // time in microseconds
   t_out = ceil(t_out/2);                      //divide time period equally for T_on and T_off
+
+  delay(5000);
 
   for (int k=1; k<=3; k++)
   {

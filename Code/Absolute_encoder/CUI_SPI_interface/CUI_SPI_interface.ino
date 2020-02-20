@@ -52,8 +52,6 @@ void loop()
   //let's also create a variable where we can count how many times we've tried to obtain the position in case there are errors
   uint8_t attempts;
 
-  //if you want to set the zero position before beggining uncomment the following function call
-  setZeroSPI(ENC_0);
 
   //once we enter this loop we will run forever
   while(1)
@@ -88,7 +86,7 @@ void loop()
 
     //For the purpose of this demo we don't need the position returned that quickly so let's wait a half second between reads
     //delay() is in milliseconds
-    delay(500);
+    delay(100);
   }
 }
 
