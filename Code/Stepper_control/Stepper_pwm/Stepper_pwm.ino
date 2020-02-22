@@ -78,6 +78,8 @@ void loop()
   float rpm = 6;
   float deg = 45;
   microstep(m);
+  delay(1);           //Indication time is 1 ms after the release of the standby mode
+  
   float f_out = (40*m)*rpm/3;
   float pls_count = 20*(m*deg)/9;       // driven pulley would rotate 1/4 times the degree rotated by the driver pulley
   f_out = ceil(f_out);

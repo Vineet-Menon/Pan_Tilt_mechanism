@@ -9,12 +9,12 @@
  */
 #include <math.h>
 
-#define dm_0 19        // Dmode0 pin is connected to GPIO pin 19
-#define dm_1 17        // Dmode1 pin is connected to GPIO pin 17
-#define dm_2 15        // Dmode2 pin is connected to GPIO pin 15
-#define dir 13        // Direction (CW/CCW) is given to GPIO pin 13 
-#define clk 11        // Step (clk) is given to GPIO pin 11
-#define ena 9         // Enable (ena) is given to GPIO pin 9
+#define dm_0 19        // Dmode0 pin is connected to GPIO pin 11
+#define dm_1 17        // Dmode1 pin is connected to GPIO pin 10
+#define dm_2 15        // Dmode2 pin is connected to GPIO pin 9
+#define dir 13        // Direction (CW/CCW) is given to GPIO pin 12 
+#define clk 11        // Step (clk) is given to GPIO pin 7
+#define ena 9         // Enable (ena) is given to GPIO pin 13
 
 
 void setup() 
@@ -82,9 +82,10 @@ void loop()
 {
   int m = 4;
   float rpm = 3;
-  float deg = 90;
+  float deg = 45;
 
   microstep(m);
+  delay(1);           //Indication time is 1 ms after the release of the standby mode
 
   float f_out = (40*m)*(rpm/3);
   Serial.print("Output frequency is :");
