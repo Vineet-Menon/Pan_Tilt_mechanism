@@ -71,6 +71,7 @@ void loop()
   int m = 4;
   float rpm = 3;
   float deg = 45;
+  float theta= 0;
 
   microstep(m);
   delay(1);           //Indication time is 1 ms after the release of the standby mode
@@ -91,8 +92,9 @@ void loop()
 
   float t_out = (pow(10,6))/f_out;          // time in microseconds
   t_out = ceil(t_out/2);                      //divide time period equally for T_on and T_off
+  Serial.println(t_out,2);
   
-  while()
+  for(int i=1;i<=80;i++)
   {
     //set attemps counter at 0 so we can try again if we get bad position    
     attempts = 0;
@@ -100,6 +102,9 @@ void loop()
     //this function gets the encoder position and returns it as a uint16_t
     //send the function res12 for your encoders resolution
     encoderPosition = getPositionSPI(ENC_0, RES12);
+
+    Serial.print("i = ");
+    Serial.println(i);
 
     //if the position returned was 0xFFFF we know that there was an error calculating the checksum
     //make 3 attempts for position. we will pre-increment attempts because we'll use the number later and want an accurate count
@@ -122,11 +127,14 @@ void loop()
       Serial.write(NEWLINE);
     }
 
-    //For the purpose of this demo we don't need the position returned that quickly so let's wait a half second between reads
-    //delay() is in milliseconds
-    delay(100);
-  }
+    clockwise(t_out);
+    theta= theta+ (1.8/(4*m));         // angle increments by 0.9/4 everytime this for loop ends
+    Serial.println(theta,4);
 
+    Serial.println(" ");
+
+  }
+  delay(60000);
 }
 
 void microstep(int m)
@@ -208,36 +216,15 @@ void setCSLine (uint8_t encoder, uint8_t csLine)
   digitalWrite(encoder, csLine);
 }
 
-void clockwise(int pls_count, int m, int T)   // function to rotate the motor clockwise by a certain degree 'deg'
+void clockwise(int T)   // function to rotate the motor clockwise by a certain degree 'deg'
 {
-  float theta= 0;
   digitalWrite(ena,HIGH);
   digitalWrite(dir,HIGH);
-  for (int i=1; i<=pls_count; i++)   //fuction to generate a square wave of frequency F_out    
-  {
-     digitalWrite(clk,HIGH);
-     delayMicroseconds(T);     // the largest value that will produce an accurate delay is 16383
-     digitalWrite(clk,LOW);
-     delayMicroseconds(T);
-     theta= theta + (1.8/(4*m));       // angle increments by 1.8/4 everytime this for loop ends
-     Serial.println(theta);
-  }
-  digitalWrite(ena,LOW);
-}
-
-void counterclockwise(int pls_count, int m, int T)   // function to rotate the kinect sensor anti-clockwise by a certain degree 'deg'
-{
-  float theta= 0;
-  digitalWrite(ena,HIGH);
-  digitalWrite(dir,LOW);
-  for (int j=1; j<=(2*pls_count); j++)     // function to generate a square wave of frequency F_out
-  {
-     digitalWrite(clk,HIGH);
-     delayMicroseconds(T);           // the largest value that will produce an accurate delay is 16383
-     digitalWrite(clk,LOW);
-     delayMicroseconds(T);
-     theta= theta+ (1.8/(4*m));         // angle increments by 0.9/4 everytime this for loop ends
-     Serial.println(theta);
-  }
+  
+  digitalWrite(clk,HIGH);
+  delayMicroseconds(T);     // the largest value that will produce an accurate delay is 16383
+  digitalWrite(clk,LOW);
+  delayMicroseconds(T);
+  
   digitalWrite(ena,LOW);
 }

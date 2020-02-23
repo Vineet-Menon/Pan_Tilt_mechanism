@@ -80,9 +80,9 @@ void microstep(int m)
 
 void loop() 
 {
-  int m = 4;
-  float rpm = 3;
-  float deg = 45;
+  int m = 2;
+  float rpm = 6;
+  float deg = 90;
 
   microstep(m);
   delay(1);           //Indication time is 1 ms after the release of the standby mode

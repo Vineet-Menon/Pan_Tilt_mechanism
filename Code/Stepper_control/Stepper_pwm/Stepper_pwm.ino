@@ -42,7 +42,6 @@ void clockwise(int pls_count, int m)   // function to rotate the motor clockwise
      theta= theta + 1.8/(4*m);       // angle increments by 1.8/4 everytime this for loop ends
      Serial.println(theta);
   }
-  digitalWrite(clk,LOW);
   digitalWrite(ena,LOW);
 }
 
@@ -57,7 +56,6 @@ void counterclockwise(int pls_count, int m)   // function to rotate the kinect s
      theta= theta+ 1.8/(4*m);         // angle increments by 0.9/4 everytime this for loop ends
      Serial.println(theta);
   }
-  digitalWrite(clk,LOW);
   digitalWrite(ena,LOW);
 }
 
@@ -75,8 +73,8 @@ void loop()
 {
   // put your main code here, to run repeatedly:
   int m = 4;
-  float rpm = 6;
-  float deg = 45;
+  float rpm = 24;
+  float deg = 9;
   microstep(m);
   delay(1);           //Indication time is 1 ms after the release of the standby mode
   
