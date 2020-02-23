@@ -69,7 +69,7 @@ void setup()
 void loop() 
 {
   int m = 4;
-  float rpm = 48;
+  float rpm = 3;
   float deg = 90;
   float theta= 0;
 
@@ -126,10 +126,13 @@ void loop()
     else //position was good, print to serial stream
     {
       Serial.print("Encoder 0: ");
-      Serial.print(encoderPosition);      //print the position in decimal format
-      Serial.write(NEWLINE);
+      //Serial.print(encoderPosition);      //print the position in decimal format
+      //Serial.write(NEWLINE);
     }
 
+    float theta_enc = (encoderPosition*360)/4096;   // encoder value conversion to degrees
+    Serial.println(theta_enc);
+    
     clockwise(t_out);
     theta= theta+ (1.8/(4*m));         // angle increments by 0.9/4 everytime this for loop ends
     Serial.println(theta,4);
@@ -222,7 +225,7 @@ void setCSLine (uint8_t encoder, uint8_t csLine)
 void clockwise(int T)   // function to rotate the motor clockwise by a certain degree 'deg'
 {
   digitalWrite(ena,HIGH);
-  digitalWrite(dir,HIGH);
+  digitalWrite(dir,LOW);
   
   digitalWrite(clk,HIGH);
   delayMicroseconds(T);     // the largest value that will produce an accurate delay is 16383
@@ -235,7 +238,7 @@ void clockwise(int T)   // function to rotate the motor clockwise by a certain d
 void anticlockwise(int T)   // function to rotate the motor clockwise by a certain degree 'deg'
 {
   digitalWrite(ena,HIGH);
-  digitalWrite(dir,LOW);
+  digitalWrite(dir,HIGH);
   
   digitalWrite(clk,HIGH);
   delayMicroseconds(T);     // the largest value that will produce an accurate delay is 16383
