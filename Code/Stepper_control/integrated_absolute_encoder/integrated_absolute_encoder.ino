@@ -69,8 +69,8 @@ void setup()
 void loop() 
 {
   int m = 4;
-  float rpm = 3;
-  float deg = 45;
+  float rpm = 48;
+  float deg = 90;
   float theta= 0;
 
   microstep(m);
@@ -92,9 +92,12 @@ void loop()
 
   float t_out = (pow(10,6))/f_out;          // time in microseconds
   t_out = ceil(t_out/2);                      //divide time period equally for T_on and T_off
-  Serial.println(t_out,2);
+  Serial.print("Time period is :");
+  Serial.println(t_out);
+
+  delay(2000);
   
-  for(int i=1;i<=80;i++)
+  for(int i=1; i<=pls_count; i++)
   {
     //set attemps counter at 0 so we can try again if we get bad position    
     attempts = 0;
@@ -123,7 +126,7 @@ void loop()
     else //position was good, print to serial stream
     {
       Serial.print("Encoder 0: ");
-      Serial.print(encoderPosition, DEC); //print the position in decimal format
+      Serial.print(encoderPosition);      //print the position in decimal format
       Serial.write(NEWLINE);
     }
 
@@ -134,7 +137,7 @@ void loop()
     Serial.println(" ");
 
   }
-  delay(60000);
+  delay(10000);
 }
 
 void microstep(int m)
@@ -220,6 +223,19 @@ void clockwise(int T)   // function to rotate the motor clockwise by a certain d
 {
   digitalWrite(ena,HIGH);
   digitalWrite(dir,HIGH);
+  
+  digitalWrite(clk,HIGH);
+  delayMicroseconds(T);     // the largest value that will produce an accurate delay is 16383
+  digitalWrite(clk,LOW);
+  delayMicroseconds(T);
+  
+  digitalWrite(ena,LOW);
+}
+
+void anticlockwise(int T)   // function to rotate the motor clockwise by a certain degree 'deg'
+{
+  digitalWrite(ena,HIGH);
+  digitalWrite(dir,LOW);
   
   digitalWrite(clk,HIGH);
   delayMicroseconds(T);     // the largest value that will produce an accurate delay is 16383
