@@ -73,8 +73,8 @@ void loop()
 {
   // put your main code here, to run repeatedly:
   int m = 4;
-  float rpm = 24;
-  float deg = 9;
+  float rpm = 96;
+  float deg = 1.5;
   microstep(m);
   delay(1);           //Indication time is 1 ms after the release of the standby mode
   

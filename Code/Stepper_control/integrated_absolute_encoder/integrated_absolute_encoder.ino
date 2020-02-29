@@ -69,7 +69,7 @@ void setup()
 void loop() 
 {
   int m = 4;
-  float rpm = 3;
+  float rpm = 64;
   float deg = 90;
   float theta= 0;
 
@@ -133,7 +133,7 @@ void loop()
     float theta_enc = (encoderPosition*360)/4096;   // encoder value conversion to degrees
     Serial.println(theta_enc);
     
-    clockwise(t_out);
+    anticlockwise(t_out);
     theta= theta+ (1.8/(4*m));         // angle increments by 0.9/4 everytime this for loop ends
     Serial.println(theta,4);
 

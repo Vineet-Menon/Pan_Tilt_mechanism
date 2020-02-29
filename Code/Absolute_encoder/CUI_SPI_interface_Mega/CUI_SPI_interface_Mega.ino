@@ -52,10 +52,17 @@ void loop()
   //let's also create a variable where we can count how many times we've tried to obtain the position in case there are errors
   uint8_t attempts;
 
+  unsigned long previousMillis = 0;        // will store last time LED was updated
+
+  float previous_angle = 0;
 
   //once we enter this loop we will run forever
   while(1)
   {
+
+    unsigned long currentMillis = micros();           // return time in microseconds
+
+    unsigned long dt = (currentMillis - previousMillis);
     //set attemps counter at 0 so we can try again if we get bad position    
     attempts = 0;
 
@@ -89,9 +96,22 @@ void loop()
     Serial.print(theta_enc,4);
     Serial.write(NEWLINE);
 
+    float d_theta = (theta_enc - previous_angle)*pow(10,6);
+
+    float ang_speed = d_theta/dt;      // angle in degrees per seconds
+
+    ang_speed = abs(ang_speed);
+
+    Serial.println(ang_speed);
+    Serial.write(NEWLINE);
+
+    previous_angle = theta_enc;
+
+    previousMillis = currentMillis;
+
     //For the purpose of this demo we don't need the position returned that quickly so let's wait a half second between reads
     //delay() is in milliseconds
-    delay(100);
+    delay(1000);
   }
 }
 
