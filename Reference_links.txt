@@ -4,3 +4,5 @@ https://playground.arduino.cc/Main/TimerPWMCheatsheet/ - variable frequency pwm 
 https://www.arduino.cc/en/reference/SPI - SPI documentation
 
 https://github.com/GadgetReboot/Arduino/tree/master/Uno/X9C_Button_Test - programmable POT
+
+https://www.youtube.com/watch?v=bDjuvhEt0og - control stepper speed with timer IC
