@@ -69,7 +69,7 @@ void setup()
 void loop() 
 {
   int m = 4;
-  float rpm = 64;
+  float rpm = 6;
   float deg = 90;
   float theta= 0;
 
@@ -126,21 +126,21 @@ void loop()
     else //position was good, print to serial stream
     {
       Serial.print("Encoder 0: ");
-      //Serial.print(encoderPosition);      //print the position in decimal format
-      //Serial.write(NEWLINE);
+      Serial.print(encoderPosition);      //print the position in decimal format
+      Serial.write(NEWLINE);
     }
 
     float theta_enc = (encoderPosition*360)/4096;   // encoder value conversion to degrees
-    Serial.println(theta_enc);
+    //Serial.println(theta_enc);
     
     anticlockwise(t_out);
     theta= theta+ (1.8/(4*m));         // angle increments by 0.9/4 everytime this for loop ends
-    Serial.println(theta,4);
+    //Serial.println(theta,4);
 
     Serial.println(" ");
 
   }
-  delay(10000);
+  delay(5000);
 }
 
 void microstep(int m)

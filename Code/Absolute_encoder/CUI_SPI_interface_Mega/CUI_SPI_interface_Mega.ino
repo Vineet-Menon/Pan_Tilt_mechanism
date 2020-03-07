@@ -87,27 +87,27 @@ void loop()
     else //position was good, print to serial stream
     {
       Serial.print("Encoder 0: ");
-//      Serial.print(encoderPosition, DEC); //print the position in decimal format
-//      Serial.write(NEWLINE);
+     Serial.print(encoderPosition, DEC); //print the position in decimal format
+      Serial.write(NEWLINE);
     }
 
-    float theta_enc = encoderPosition;      // encoder value conversion to degrees
-    theta_enc = theta_enc*360/4096;
-    Serial.print(theta_enc,4);
+//    float theta_enc = encoderPosition;      // encoder value conversion to degrees
+//    theta_enc = theta_enc*360/4096;
+//    Serial.print(theta_enc,4);
     Serial.write(NEWLINE);
 
-    float d_theta = (theta_enc - previous_angle)*pow(10,6);
+    //float d_theta = (theta_enc - previous_angle)*pow(10,6);
 
-    float ang_speed = d_theta/dt;      // angle in degrees per seconds
+    //float ang_speed = d_theta/dt;      // angle in degrees per seconds
 
-    ang_speed = abs(ang_speed);
+    //ang_speed = abs(ang_speed);
 
-    Serial.println(ang_speed);
+    //Serial.println(ang_speed);
     Serial.write(NEWLINE);
 
-    previous_angle = theta_enc;
+    //previous_angle = theta_enc;
 
-    previousMillis = currentMillis;
+    //previousMillis = currentMillis;
 
     //For the purpose of this demo we don't need the position returned that quickly so let's wait a half second between reads
     //delay() is in milliseconds
